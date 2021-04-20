@@ -1,6 +1,6 @@
 import React from 'react';
-import Calendar from '../components/calendar';
-import DateDetails from '../components/dateDetails';
+import Calendar from '../../components/calendar';
+import DateDetails from '../../components/dateDetails';
 
 const WeeklyViewPage = () => {
     return (

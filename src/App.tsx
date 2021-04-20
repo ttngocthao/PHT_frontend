@@ -2,10 +2,10 @@ import React from 'react';
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 
 import {useDispatch} from 'react-redux';
-import {getDailyNotes} from './store/actionCreators';
+import {getDailyNotes} from './actionCreators.ts/dailyNote.actionCreators';
 
-import HomePage from './homepage';
-import WeeklyViewPage from './weeklyViewPage';
+import HomePage from './views/homepage';
+import WeeklyViewPage from './views/weeklyViewPage';
 
 function App() {
   const dispatch = useDispatch();
