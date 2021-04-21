@@ -32,6 +32,7 @@ interface MealNoteEntry   {
     note?:string
 }
 
+
 type DailyNoteState = {
     dailyNotes: IDailyNote[]|[],
     selectedDayNote: IDailyNote | undefined
@@ -50,3 +51,5 @@ type DailyNoteAction = {
 };
 
 type DispatchType = (args: DailyNoteAction)=>DailyNoteAction;
+
+type MealNoteProps = Omit<MealNoteEntry,'id'|'date'|'username'>;
