@@ -11,44 +11,15 @@ import {
   subWeeks
 } from "date-fns";
 import styles from './styles.module.css';
-// import CSS from 'csstype';
-// const stylesVar ={
-//     borderColor: '#eee',
-//     neutralColor:'#fff',
-// };
-// interface IStyles {
-//     calendar:CSS.Properties,
-//     header: CSS.Properties,
-//     row: CSS.Properties,
-// }
-// const styles:IStyles ={
-//     calendar:{
-//         display: 'block',
-//         position: 'relative',
-//         width:'100%',
-//         background: `${stylesVar.neutralColor}`,
-//         border: `1px solid ${stylesVar.borderColor}`
-//     },
-//     header:{
-//         display: 'block',
-//         width: '100%',
-//         padding: '1.75em 0',
-//         borderBottom: `1px solid ${stylesVar.borderColor}`,
-//         background: `${stylesVar.neutralColor}`
-//     },
-//     row:{
-//         margin: 0,
-//         padding: 0,
-//         display: 'flex',
-//         flexDirection: 'row',
-//         flexWrap: 'wrap',
-//         width: '100%'
-//     },
-    
-// };
+import { useDispatch, useSelector } from 'react-redux';
+import {getDayNote} from '../../actionCreators/dailyNote.actionCreators';
+import { RootState } from '../../store';
 
 
 const Calendar = () => {
+    const dispatch = useDispatch();
+    const allDailyNotes = useSelector((state:RootState)=>state.dailyNotes.dailyNotes);
+
     const [currentMonth, setCurrentMonth] = useState(new Date());
     const [currentWeek, setCurrentWeek] = useState(getWeek(currentMonth));
     const [selectedDate, setSelectedDate] = useState(new Date());
@@ -107,6 +78,9 @@ const renderHeader = () => {
     }
     return <div className={`${styles.days} ${styles.row}`}>{days}</div>;
   };
+
+
+
   const renderCells = () => {
     const startDate = startOfWeek(currentMonth, { weekStartsOn: 1 });
     const endDate = lastDayOfWeek(currentMonth, { weekStartsOn: 1 });
@@ -132,6 +106,7 @@ const renderHeader = () => {
             onClick={() => {
               const dayStr = format(cloneDay, "ccc dd MMM yy");
               setSelectedDate(cloneDay);
+              dispatch(getDayNote(dayStr,allDailyNotes));
               console.log(dayStr);
              // onDateClickHandle(cloneDay, dayStr);
             }}

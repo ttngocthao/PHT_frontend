@@ -1,3 +1,4 @@
+// import * as actionTypes from './store/actionConstants';
 //!set types for your variables, function parameters, state, action, dispatch type
 enum EMealType {
     Breakfast='Breakfast',
@@ -32,12 +33,20 @@ interface MealNoteEntry   {
 }
 
 type DailyNoteState = {
-    dailyNotes: IDailyNote[]|[]
+    dailyNotes: IDailyNote[]|[],
+    selectedDayNote: IDailyNote | undefined
+   
 };
 
 type DailyNoteAction = {
-    type: string
-    payload: IDailyNote[] |[]
+    type: 'INIT_DAILYNOTES'
+    payload: IDailyNote[] |[] 
+}|{
+    type: 'GET_DAYNOTE'
+    payload: IDailyNote |undefined
+}|{
+    type:'SET_DATE'
+    payload:string
 };
 
 type DispatchType = (args: DailyNoteAction)=>DailyNoteAction;

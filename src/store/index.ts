@@ -12,5 +12,5 @@ const store = createStore(
     reducer,
     composeWithDevTools(applyMiddleware(thunk))
 );
-
+export type RootState = ReturnType<typeof reducer>;
 export default store;
