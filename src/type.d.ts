@@ -8,27 +8,30 @@ enum EMealType {
 
 interface IDailyNote {
     id: string
-    date:string;
-    username:string;
-    fastingHours?:string;
-    sleepingHours?:string;
-    dailyNote?:string;
-    note?:string;
+    date:string
+    username:string
+    fastingHours?:string
+    sleepingHours?:string
+    dailyNote?:string
+    note?:string
+    breakfast?: MealNoteEntry
+    lunch?: MealNoteEntry
+    dinner?: MealNoteEntry
 }
 
 interface MealNoteEntry   {
-    id:string,
-    date:string,
-    username:string,
-    mealType: EMealType,
-    skippedMeal?:boolean,
-    takenMed?:boolean,
-    medNote?:string,
-    menuDetails?: string,
-    bgBe4Meal?:string|number,
-    bgAftMeal?:string|number,
-    bpBe4Meal?:string|number,
-    bpAftMeal?:string|number,
+    id:string
+    date:string
+    username:string
+    mealType: EMealType
+    skippedMeal?:boolean
+    takenMed?:boolean
+    medNote?:string
+    menuDetails?: string
+    bgBe4Meal?:string|number
+    bgAftMeal?:string|number
+    bpBe4Meal?:string|number
+    bpAftMeal?:string|number
     note?:string
 }
 

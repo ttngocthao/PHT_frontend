@@ -2,7 +2,7 @@ import * as actionTypes from '../store/actionConstants';
 
 const initialState: DailyNoteState={
     dailyNotes:[],
-    selectedDayNote: undefined
+    selectedDayNote: undefined,
 };
 
 

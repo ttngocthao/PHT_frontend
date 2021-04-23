@@ -1,9 +1,14 @@
 import React from 'react';
 
-const MealNote = ({mealType,skippedMeal,menuDetails,bgBe4Meal,bgAftMeal,bpBe4Meal,bpAftMeal,note}:MealNoteProps) => {
+interface Props{
+    data: MealNoteProps
+}
+
+const MealNote = ({data}:Props) => {
+    const {skippedMeal,menuDetails,bgBe4Meal,bgAftMeal,bpBe4Meal,bpAftMeal,note}=data;
     return (
         <div>
-          <h3>{mealType} - {skippedMeal && 'Skipped'}</h3>
+          <h3>{skippedMeal && 'Skipped'}</h3>
           {!skippedMeal && 
             <div>
               <div>
