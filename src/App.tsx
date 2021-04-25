@@ -2,7 +2,7 @@ import React,{useEffect} from 'react';
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 
 import {useDispatch} from 'react-redux';
-import {getDailyNotes} from './actionCreators/dailyNote.actionCreators';
+import {initDailyNotes} from './state/actionCreators/dailyNote.actionCreators';
 
 import HomePage from './views/homepage';
 import WeeklyViewPage from './views/weeklyViewPage';
@@ -11,7 +11,7 @@ function App() {
   const dispatch = useDispatch();
  
   useEffect(() => {
-     dispatch(getDailyNotes());
+     dispatch(initDailyNotes());
   }, [dispatch]);
   
   return (

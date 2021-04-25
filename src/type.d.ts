@@ -39,20 +39,33 @@ interface MealNoteEntry   {
 type DailyNoteState = {
     dailyNotes: IDailyNote[]|[],
     selectedDayNote: IDailyNote | undefined
-   
+    selectedDate: Date 
+};
+type InitDailyNotesPayload ={
+    dailyNotes: IDailyNote[]|[],
+    selectedDayNote: IDailyNote | undefined
 };
 
 type DailyNoteAction = {
-    type: 'INIT_DAILYNOTES'
+    type: 'GET_DAILYNOTES'
     payload: IDailyNote[] |[] 
+}|{
+    type: 'INIT_DAILYNOTES'
+    payload: InitDailyNotesPayload 
 }|{
     type: 'GET_DAYNOTE'
     payload: IDailyNote |undefined
 }|{
     type:'SET_DATE'
     payload:string
+}|{
+    type:'ADD_DAYNOTE'
+    payload: IDailyNote
+}|{
+    type:'SELECT_DATE'
+    payload: Date 
 };
 
 type DispatchType = (args: DailyNoteAction)=>DailyNoteAction;
-
+type EntryDailyNoteFormValue = Omit<IDailyNote,'id'>;
 type MealNoteProps = Omit<MealNoteEntry,'id'|'date'|'username'>;

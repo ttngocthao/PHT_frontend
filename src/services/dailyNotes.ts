@@ -6,6 +6,9 @@ const getAll = async()=>{
     return res.data;
 };
 
+const add = async(newDailyNote:EntryDailyNoteFormValue)=>{
+    const res = await axios.post<IDailyNote>(`${baseUrl}`,newDailyNote);
+    return res.data;
+};
 
-
-export default{getAll};
+export default{getAll,add};

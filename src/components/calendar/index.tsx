@@ -12,17 +12,20 @@ import {
 } from "date-fns";
 import styles from './styles.module.css';
 import { useDispatch, useSelector } from 'react-redux';
-import {getDayNote} from '../../actionCreators/dailyNote.actionCreators';
+import {getDayNote, setSelectedDate} from '../../state/actionCreators/dailyNote.actionCreators';
 import { RootState } from '../../store';
 
 
 const Calendar = () => {
     const dispatch = useDispatch();
-    const allDailyNotes = useSelector((state:RootState)=>state.dailyNotes.dailyNotes);
+    const dailyNotesState = useSelector((state:RootState)=>state.dailyNotes);
+    const {dailyNotes:allDailyNotes, selectedDate}= dailyNotesState;
+
+   
 
     const [currentMonth, setCurrentMonth] = useState(new Date());
     const [currentWeek, setCurrentWeek] = useState(getWeek(currentMonth));
-    const [selectedDate, setSelectedDate] = useState(new Date());
+ //   const [selectedDate, setSelectedDate] = useState(new Date());
 
     // const changeMonthHandle = (btnType:string) => {
     //     if (btnType === "prev") {
@@ -105,7 +108,8 @@ const renderHeader = () => {
             key={i}
             onClick={() => {
               const dayStr = format(cloneDay, "ccc dd MMM yy");
-              setSelectedDate(cloneDay);
+              dispatch(setSelectedDate(cloneDay));
+              //setSelectedDate(cloneDay);
               dispatch(getDayNote(dayStr,allDailyNotes));
               console.log(dayStr);
              // onDateClickHandle(cloneDay, dayStr);
