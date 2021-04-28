@@ -1,4 +1,5 @@
 import * as actionTypes from '../../store/actionConstants';
+import {DailyNoteAction, DailyNoteState} from '../../types';
 
 const initialState: DailyNoteState={
     dailyNotes:[],
@@ -19,7 +20,7 @@ const reducer =(state:DailyNoteState = initialState,action: DailyNoteAction):Dai
         case actionTypes.SELECT_DATE:
             return {...state,selectedDate:action.payload};
         case actionTypes.ADD_DAYNOTE:
-            return {...state,dailyNotes: [...state.dailyNotes, action.payload]};
+            return {...state,dailyNotes: [...state.dailyNotes, action.payload],selectedDayNote:action.payload};
         default:
             return state;
     }

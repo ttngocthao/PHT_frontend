@@ -1,4 +1,5 @@
 import axios from 'axios';
+import {IDailyNote,EntryDailyNoteFormValue} from '../types';
 const baseUrl ='http://localhost:5000/api/dailyNotes';
 
 const getAll = async()=>{

@@ -5,6 +5,7 @@ import {Button} from 'semantic-ui-react';
 import {TextField} from '../formHelper';
 import { useSelector } from 'react-redux';
 import { RootState } from '../../store';
+import {EntryDailyNoteFormValue,DailyNoteState} from '../../types';
 
 // interface DailyNoteFormValues {
 //     note?: string
@@ -15,7 +16,7 @@ interface Props {
     onSubmit: (values:EntryDailyNoteFormValue)=>void
 }
 const AddDailyNoteEntryForm = ({onSubmit}:Props) => {
-    const dailyNoteState = useSelector((state:RootState)=>state.dailyNotes);
+    const dailyNoteState:DailyNoteState = useSelector((state:RootState)=>state.dailyNotes);
     const {selectedDate}= dailyNoteState;
     
     // const validate=(values:DailyNoteFormValues)=>{

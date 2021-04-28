@@ -1,12 +1,17 @@
 // import * as actionTypes from './store/actionConstants';
 //!set types for your variables, function parameters, state, action, dispatch type
-enum EMealType {
+export enum MealType {
     Breakfast='Breakfast',
     Lunch = 'Lunch',
     Dinner = 'Dinner'
 }
 
-interface IDailyNote {
+export type MealTypeOption = {
+    value: MealType
+    label:string
+};
+
+export interface IDailyNote {
     id: string
     date:string
     username:string
@@ -19,11 +24,11 @@ interface IDailyNote {
     dinner?: MealNoteEntry
 }
 
-interface MealNoteEntry   {
+export interface MealNoteEntry   {
     id:string
     date:string
     username:string
-    mealType: EMealType
+    mealType: MealType
     skippedMeal?:boolean
     takenMed?:boolean
     medNote?:string
@@ -36,17 +41,17 @@ interface MealNoteEntry   {
 }
 
 
-type DailyNoteState = {
+export type DailyNoteState = {
     dailyNotes: IDailyNote[]|[],
     selectedDayNote: IDailyNote | undefined
     selectedDate: Date 
 };
-type InitDailyNotesPayload ={
+export type InitDailyNotesPayload ={
     dailyNotes: IDailyNote[]|[],
     selectedDayNote: IDailyNote | undefined
 };
 
-type DailyNoteAction = {
+export type DailyNoteAction = {
     type: 'GET_DAILYNOTES'
     payload: IDailyNote[] |[] 
 }|{
@@ -66,6 +71,6 @@ type DailyNoteAction = {
     payload: Date 
 };
 
-type DispatchType = (args: DailyNoteAction)=>DailyNoteAction;
-type EntryDailyNoteFormValue = Omit<IDailyNote,'id'>;
-type MealNoteProps = Omit<MealNoteEntry,'id'|'date'|'username'>;
+export type DispatchType = (args: DailyNoteAction)=>DailyNoteAction;
+export type EntryDailyNoteFormValue = Omit<IDailyNote,'id'>;
+export type MealNoteProps = Omit<MealNoteEntry,'id'|'date'|'username'>;

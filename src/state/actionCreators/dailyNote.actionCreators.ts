@@ -1,5 +1,6 @@
 import * as actionTypes from '../../store/actionConstants';
 import dailyNoteService from '../../services/dailyNotes';
+import {DispatchType,DailyNoteAction,IDailyNote,EntryDailyNoteFormValue} from '../../types';
 import { format } from 'date-fns';
 
 

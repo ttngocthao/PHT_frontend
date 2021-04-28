@@ -1,5 +1,5 @@
 import React from 'react';
-
+import {MealNoteProps} from '../../types';
 interface Props{
     data: MealNoteProps
 }
