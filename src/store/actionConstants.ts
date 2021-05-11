@@ -5,3 +5,5 @@ export const GET_DAYNOTE = 'GET_DAYNOTE';
 export const ADD_DAYNOTE = 'ADD_DAYNOTE';
 
 export const SELECT_DATE = 'SELECT_DATE';
+
+export const SELECT_MEALTYPE='SELECT_MEALTYPE';

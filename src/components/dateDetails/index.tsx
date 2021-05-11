@@ -1,6 +1,6 @@
 //import React from 'react';
 import React,{useState} from 'react';
-import {EntryDailyNoteFormValue,MealType} from '../../types';
+import {EntryDailyNoteFormValue} from '../../types';
 import { useDispatch, useSelector} from 'react-redux';
 import {Button} from 'semantic-ui-react';
 import { addDailyNote } from '../../state/actionCreators/dailyNote.actionCreators';
@@ -9,6 +9,7 @@ import AddDailyNoteModal from '../addDailyNoteModal';
 import AddMealNoteModal from '../addMealNoteModal';
 import DailyNote from '../dailyNote';
 import MealNote from '../mealNote';
+import { setSelectedMealType } from '../../state/actionCreators/mealNote.actionCreators';
 
 
 
@@ -25,8 +26,9 @@ const DateDetails = () => {
     const addMealHandle = ()=>{
         alert('added meal');
     };
-    const showMealFormHandle =(dailyNoteId:string,mealType:MealType)=>{
-        console.log(mealType,'-',dailyNoteId);
+    const showMealFormHandle =(dailyNoteId:string,mealType:string)=>{
+        //console.log(mealType,'-',dailyNoteId);
+        dispatch(setSelectedMealType(mealType));
         setShowMealForm(true);
     };
     if(!selectedDayNote){
@@ -54,7 +56,7 @@ const DateDetails = () => {
                 date={date} 
                 note={note}/>
             <h3>Breakfast</h3>
-            {selectedDayNote.breakfast ? <MealNote data={selectedDayNote.breakfast} /> : <button onClick={()=>showMealFormHandle(selectedDayNote.id,MealType.Breakfast)}>Add Breakfast details</button> }
+            {selectedDayNote.breakfast ? <MealNote data={selectedDayNote.breakfast} /> : <button onClick={()=>showMealFormHandle(selectedDayNote.id,'Breakfast')}>Add Breakfast details</button> }
             <br/>
             <h3>Lunch</h3>
             {selectedDayNote.lunch ? <MealNote data={selectedDayNote.lunch} /> : <button onClick={()=>alert('add lunch details')}>Add Lunch details</button>}

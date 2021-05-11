@@ -14,6 +14,8 @@ export const getDailyNotes =()=>{
       dispatch(action);
     };
 };
+
+
 export const initDailyNotes =()=>{   
    return async (dispatch: DispatchType)=>{
        const dailyNotes = await dailyNoteService.getAll();

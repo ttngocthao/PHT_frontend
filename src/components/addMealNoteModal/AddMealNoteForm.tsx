@@ -1,41 +1,79 @@
 import React from 'react';
+import {format} from 'date-fns';
 import { Formik,Form,Field } from 'formik';
-import { SelectField, TextField } from '../formHelper';
+import { TextField } from '../formHelper';
 import {Button} from 'semantic-ui-react';
-import {MealType,MealTypeOption} from '../../types';
+import {EntryMealNoteFormValue, MealType} from '../../types';
+import {RootState} from '../../store';
+import { useSelector } from 'react-redux';
 
-const mealTypeOptions:MealTypeOption[]=[
-    {value: MealType.Breakfast,label:'Breakfast'},
-    {value: MealType.Lunch,label:'Lunch'},
-    {value: MealType.Dinner,label:'Dinner'},
-];
+// const mealTypeOptions:MealTypeOption[]=[
+//     {value: MealType.Breakfast,label:'Breakfast'},
+//     {value: MealType.Lunch,label:'Lunch'},
+//     {value: MealType.Dinner,label:'Dinner'},
+// ];
 interface Props {
-    // onSubmit: (values:EntryDailyNoteFormValue)=>void
-    onSubmit: ()=>void
+    onSubmit: (values:EntryMealNoteFormValue)=>void
+   // onSubmit: ()=>void
 }
 const AddMealNoteForm = ({onSubmit}:Props) => {
+    const selectedDate:Date = useSelector((state:RootState)=>state.dailyNotes.selectedDate);
+    const selectedMealType:string|undefined= useSelector((state:RootState)=> state.mealNotes.selectedMealType);
+
+    const convertMealTypeStringToEnum =(str:string|undefined):MealType=>{
+      if(!str){
+        return MealType.Breakfast;
+      }
+      let result:MealType;
+      switch(str){
+        case 'Lunch':
+          result= MealType.Lunch;
+          break;
+        case 'Dinner':
+          result = MealType.Dinner;
+          break;
+        default:
+          result= MealType.Breakfast;
+      }
+      return result;
+    };
+
+    const validate=(values:EntryMealNoteFormValue)=>{
+        const requiredError = "Field is required";
+   
+        const errors: { [field: string]: string } = {};
+       if(!values.menuDetails){
+         errors.menuDetails =requiredError;
+       }
+      
+        return errors;
+    };
+
     return (
         <div>
-           Form to add meal note will be here
+          
            <Formik
             initialValues={{
-                mealType: MealType.Breakfast,
+                username:'mum',
+                date:format(selectedDate, "ccc dd MMM yy"),//from store
+                mealType:convertMealTypeStringToEnum(selectedMealType),//from store
                 bgBe4Meal:'',
                 bgAftMeal:'',
                 bpBe4Meal:'',
                 bpAftMeal:'',
                 menuDetails:''
             }}
+            validate={(values)=>validate(values)}
             onSubmit={onSubmit}
            >
                {({isValid,dirty})=> {
                 return(
                     <Form className="form ui">
-                         <SelectField
+                         {/* <SelectField
                             label='Meal of the day'
                             name='mealType'
                             options={mealTypeOptions}
-                         />
+                         /> */}
                          <Field
                             placeholder='Ex: 2eggs, ham, cheese, avocado, coffee with cream'
                             name='menuDetails'
@@ -73,6 +111,7 @@ const AddMealNoteForm = ({onSubmit}:Props) => {
                           <Button
                             type='submit'
                             floated='right'
+                            color={'green'}
                             disabled={!dirty || !isValid}
                         >
                             Add

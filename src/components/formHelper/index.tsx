@@ -17,8 +17,8 @@ export const TextField = ({field,label,placeholder,unit}:TextFieldProps) => {
                 placeholder={placeholder}
                 {...field}
             />{unit ? unit : null}
-            <div>
-                <ErrorMessage name='note'/> 
+            <div style={{ color:'red' }}>
+                <ErrorMessage name={field.name}/> 
             </div>                       
         </Form.Field>
     );
