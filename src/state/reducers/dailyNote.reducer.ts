@@ -1,10 +1,11 @@
 import * as actionTypes from '../../store/actionConstants';
-import {DailyNoteAction, DailyNoteState} from '../../types';
+import {DailyNoteAction, DailyNoteState, IDailyNote} from '../../types';
 
 const initialState: DailyNoteState={
     dailyNotes:[],
     selectedDayNote: undefined,
-    selectedDate: new Date()
+    selectedDate: new Date(),
+    selectedMealType: undefined
 };
 
 
@@ -21,6 +22,16 @@ const reducer =(state:DailyNoteState = initialState,action: DailyNoteAction):Dai
             return {...state,selectedDate:action.payload};
         case actionTypes.ADD_DAYNOTE:
             return {...state,dailyNotes: [...state.dailyNotes, action.payload],selectedDayNote:action.payload};
+        case actionTypes.UPDATE_DAILYNOTE:
+            console.log('update daily note - order 2');
+            return state;
+        case actionTypes.SELECT_MEALTYPE:
+            return {...state, selectedMealType: action.payload};
+        case actionTypes.ADD_MEALNOTE:
+            const newAddedMeal = action.payload;
+            const mealType = newAddedMeal.mealType;
+            const selectedDayNote = {...state.selectedDayNote, [mealType]:newAddedMeal} as IDailyNote;
+            return {...state,selectedDayNote:selectedDayNote};
         default:
             return state;
     }

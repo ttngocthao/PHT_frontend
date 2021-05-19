@@ -13,12 +13,12 @@ import { useSelector } from 'react-redux';
 //     {value: MealType.Dinner,label:'Dinner'},
 // ];
 interface Props {
-    onSubmit: (values:EntryMealNoteFormValue)=>void
-   // onSubmit: ()=>void
+  onSubmit: (values:EntryMealNoteFormValue)=>void
 }
 const AddMealNoteForm = ({onSubmit}:Props) => {
-    const selectedDate:Date = useSelector((state:RootState)=>state.dailyNotes.selectedDate);
-    const selectedMealType:string|undefined= useSelector((state:RootState)=> state.mealNotes.selectedMealType);
+    const {selectedDate,selectedMealType} = useSelector((state:RootState)=>({selectedDate: state.dailyNotes.selectedDate,selectedMealType: state.dailyNotes.selectedMealType}));
+    // const selectedDate:Date = useSelector((state:RootState)=>state.dailyNotes.selectedDate);
+    // const selectedMealType:string|undefined= useSelector((state:RootState)=> state.mealNotes.selectedMealType);
 
     const convertMealTypeStringToEnum =(str:string|undefined):MealType=>{
       if(!str){
@@ -80,7 +80,7 @@ const AddMealNoteForm = ({onSubmit}:Props) => {
                             label='Meal includes'
                             component={TextField}
                          />
-                         <Field
+                         {/* <Field
                             placeholder='Ex: 120'
                             name='bgBe4Meal'
                             label='Blood glucose before meal'
@@ -107,7 +107,7 @@ const AddMealNoteForm = ({onSubmit}:Props) => {
                             label='Blood pressure after meal'
                             unit='mm/Hg'
                             component={TextField}
-                          />
+                          /> */}
                           <Button
                             type='submit'
                             floated='right'

@@ -15,8 +15,8 @@ function App() {
   }, [dispatch]);
   
   return (
-    <div>
-     <h1>Personal Health Tracker - React front end</h1>   
+    <div style={{padding:'10px',maxWidth:'600px'}}>
+     <h1>Personal Health Tracker</h1>   
       <Router>
         <Switch>
           <Route path='/weekly-view'>

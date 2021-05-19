@@ -11,6 +11,16 @@ export type MealTypeOption = {
     label:string
 };
 
+export type Measurement  ={
+    time: string,
+    readingNo: string
+};
+
+export type Medication ={
+    time: string,
+    medName: string
+};
+
 export interface IDailyNote {
     id: string
     date:string
@@ -19,6 +29,11 @@ export interface IDailyNote {
     sleepingHours?:string
     dailyNote?:string
     note?:string
+    bloodPressure?:Measurement[],
+    bloodGlucose?:Measurement[],
+    medication?:Medication[],
+    activities?:string,
+    beverages?: string
     breakfast?: MealNoteEntry
     lunch?: MealNoteEntry
     dinner?: MealNoteEntry
@@ -58,6 +73,7 @@ export type DailyNoteState = {
     dailyNotes: IDailyNote[]|[],
     selectedDayNote: IDailyNote | undefined
     selectedDate: Date 
+    selectedMealType: string | undefined
 };
 
 
@@ -85,18 +101,17 @@ export type DailyNoteAction = {
 }|{
     type:'SELECT_DATE'
     payload: Date 
-};
-/**
- * * Meal Note  
- */
-export type MealNoteState ={
-    selectedMealType:string|undefined
-};
-
-export type MealNoteAction = {
+}|{
+    type:'UPDATE_DAILYNOTE'
+    payload?:string
+}|{
     type:'SELECT_MEALTYPE'
     payload: string
+}|{
+    type:'ADD_MEALNOTE'
+    payload:MealNoteEntry
 };
 
-export type DispatchType = (args: DailyNoteAction|MealNoteAction)=>DailyNoteAction|MealNoteAction;
+
+export type DispatchType = (args: DailyNoteAction)=>DailyNoteAction;
 //! ============== END OF TYPE FOR REDUCERS AND STATES  ============== !//

@@ -12,7 +12,7 @@ const WeeklyViewPage = () => {
    
     return (
         <div>
-            <h2>view calendar here</h2>
+            
            
             <Calendar/>
             <DateDetails/>

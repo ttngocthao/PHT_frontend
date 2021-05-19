@@ -1,6 +1,7 @@
 import * as actionTypes from '../../store/actionConstants';
 import dailyNoteService from '../../services/dailyNotes';
-import {DispatchType,DailyNoteAction,IDailyNote,EntryDailyNoteFormValue} from '../../types';
+import mealNotesService from '../../services/mealNotes';
+import {DispatchType,DailyNoteAction,IDailyNote,EntryDailyNoteFormValue,EntryMealNoteFormValue} from '../../types';
 import { format } from 'date-fns';
 
 
@@ -46,11 +47,11 @@ export const getDayNote = (selectedDate:string,allNotes:IDailyNote[])=>{
 
 
 export const addDailyNote =(dailyNote: EntryDailyNoteFormValue)=>{
-  console.log('inside add dailynote func');
+  
   return async (dispatch:DispatchType)=>{  
-    console.log('inside dispatch func',dailyNote);
+    
     const newDailyNote = await dailyNoteService.add(dailyNote);
-    console.log(newDailyNote);
+  
     const action: DailyNoteAction ={
       type: actionTypes.ADD_DAYNOTE,
       payload: newDailyNote
@@ -67,4 +68,27 @@ export const setSelectedDate =(selectedDate:Date)=>{
     };
     return dispatch(action);
   };
+};
+
+export const setSelectedMealType =(selectedMealType:string)=>{
+    return(dispatch:DispatchType)=>{
+
+        const action: DailyNoteAction ={
+            type:actionTypes.SELECT_MEALTYPE,
+            payload: selectedMealType
+        };
+
+        return dispatch(action);
+    };
+};
+
+export const addMealNote = (newMealNote: EntryMealNoteFormValue )=>{
+    return async (dispatch:DispatchType)=>{
+        const mealNote = await mealNotesService.add(newMealNote);
+        const action: DailyNoteAction ={
+            type: actionTypes.ADD_MEALNOTE,
+            payload: mealNote
+        };
+        return dispatch(action);
+    };
 };

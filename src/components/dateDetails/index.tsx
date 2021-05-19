@@ -1,36 +1,47 @@
 //import React from 'react';
 import React,{useState} from 'react';
-import {EntryDailyNoteFormValue} from '../../types';
+import {EntryDailyNoteFormValue, EntryMealNoteFormValue} from '../../types';
 import { useDispatch, useSelector} from 'react-redux';
 import {Button} from 'semantic-ui-react';
-import { addDailyNote } from '../../state/actionCreators/dailyNote.actionCreators';
+import { addDailyNote,setSelectedMealType,addMealNote } from '../../state/actionCreators/dailyNote.actionCreators';
 import { RootState } from '../../store';
 import AddDailyNoteModal from '../addDailyNoteModal';
 import AddMealNoteModal from '../addMealNoteModal';
 import DailyNote from '../dailyNote';
 import MealNote from '../mealNote';
-import { setSelectedMealType } from '../../state/actionCreators/mealNote.actionCreators';
+
+//import { addMealNote,  } from '../../state/actionCreators/mealNote.actionCreators';
 
 
 
 const DateDetails = () => {
     const dispatch = useDispatch();
     const selectedDayNote = useSelector((state:RootState)=>state.dailyNotes.selectedDayNote);
+   
     const [showForm,setShowForm]= useState(false);
     const [showMealForm,setShowMealForm] = useState(false);
+
     const onSubmitHandle =(values:EntryDailyNoteFormValue)=>{
         console.log('submit form',values);
        dispatch(addDailyNote(values));
        setShowForm(false);
     };
-    const addMealHandle = ()=>{
-        alert('added meal');
+
+    const addMealHandle = (values: EntryMealNoteFormValue)=>{
+       if(values){
+           dispatch(addMealNote(values));//! add data to database - update view
+           setShowMealForm(false);//! close the form
+       }else{
+           alert('failed to add as values are empty');
+       }       
     };
+
     const showMealFormHandle =(dailyNoteId:string,mealType:string)=>{
         //console.log(mealType,'-',dailyNoteId);
         dispatch(setSelectedMealType(mealType));
         setShowMealForm(true);
     };
+
     if(!selectedDayNote){
         return <div>Not taken note yet
             <br/>
@@ -46,15 +57,47 @@ const DateDetails = () => {
         </div>;
     }
     const {fastingHours,sleepingHours,date,note}=selectedDayNote;
-    // const {fastingHours,sleepingHours,date,note} = state;
+    const fastingProtocol = ():string=>{
+        let countMeals = 0;
+        let protocol ='';
+        if(selectedDayNote.breakfast?.skippedMeal){
+            countMeals++ ;
+        }
+        if(selectedDayNote.lunch?.skippedMeal){
+            countMeals++ ;
+        }
+        if(selectedDayNote.dinner?.skippedMeal){
+            countMeals++ ;
+        }
+       
+        switch(countMeals){
+            case 0:
+                protocol = '3Mad';
+                break;
+            case 1:
+                protocol = '2Mad';
+                break;
+            case 2: 
+                protocol= 'OMad';
+                break;
+            case 3:
+                protocol='NoMad';
+                break;
+            default:
+                protocol = '3Mad';
+                break;
+        }
+        return protocol;
+    };
     return (
-        <div>
-           Display daily note and meal notes:
+        <div>          
             <DailyNote 
                 fastingHours={fastingHours} 
                 sleepingHours={sleepingHours} 
                 date={date} 
-                note={note}/>
+                note={note}
+                fastingProtocol={fastingProtocol()}
+                />
             <h3>Breakfast</h3>
             {selectedDayNote.breakfast ? <MealNote data={selectedDayNote.breakfast} /> : <button onClick={()=>showMealFormHandle(selectedDayNote.id,'Breakfast')}>Add Breakfast details</button> }
             <br/>

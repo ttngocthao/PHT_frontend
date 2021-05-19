@@ -4,19 +4,19 @@ import { Modal, Segment } from 'semantic-ui-react';
 import AddMealNoteForm from './AddMealNoteForm';
 import { useSelector } from 'react-redux';
 import {RootState} from '../../store';
+import { EntryMealNoteFormValue } from '../../types';
 
 
 interface Props {
   modalOpen: boolean;
   onClose: () => void;
-//   onSubmit: (values: EntryDailyNoteFormValue) => void;
-  onSubmit:()=>void;
+  onSubmit:(values: EntryMealNoteFormValue)=>void;
   error?: string;
 }
 
 
 const AddMealNoteModal = ({modalOpen,onClose,error,onSubmit}:Props) => {
-  const selectedMealType = useSelector((state:RootState)=>state.mealNotes.selectedMealType);
+  const selectedMealType = useSelector((state:RootState)=>state.dailyNotes.selectedMealType);
   const selectedDate = useSelector((state:RootState)=>state.dailyNotes.selectedDate);
     return (
         <Modal open={modalOpen} onClose={onClose} closeIcon>
