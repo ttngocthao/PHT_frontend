@@ -7,15 +7,17 @@ interface TextFieldProps extends FieldProps{
     label:string
     placeholder: string
     unit?: string
+    multiLines?:boolean
 }
 export type SmallTextFieldProps = Omit<TextFieldProps,'label'>;
 
-export const TextField = ({field,label,placeholder,unit}:TextFieldProps) => {
+export const TextField = ({field,label,placeholder,unit,multiLines}:TextFieldProps) => {
     return (
         <Form.Field>
             <label>{label}</label>
             <Field
                 placeholder={placeholder}
+                as={multiLines ? 'textarea': 'input'}
                 {...field}
             />{unit ? unit : null}
             <div style={{ color:'red' }}>

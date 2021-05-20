@@ -57,10 +57,6 @@ const AddMealNoteForm = ({onSubmit}:Props) => {
                 username:'mum',
                 date:format(selectedDate, "ccc dd MMM yy"),//from store
                 mealType:convertMealTypeStringToEnum(selectedMealType),//from store
-                bgBe4Meal:'',
-                bgAftMeal:'',
-                bpBe4Meal:'',
-                bpAftMeal:'',
                 menuDetails:''
             }}
             validate={(values)=>validate(values)}
@@ -69,16 +65,13 @@ const AddMealNoteForm = ({onSubmit}:Props) => {
                {({isValid,dirty})=> {
                 return(
                     <Form className="form ui">
-                         {/* <SelectField
-                            label='Meal of the day'
-                            name='mealType'
-                            options={mealTypeOptions}
-                         /> */}
+                         
                          <Field
                             placeholder='Ex: 2eggs, ham, cheese, avocado, coffee with cream'
                             name='menuDetails'
                             label='Meal includes'
                             component={TextField}
+                            multiLines={true}
                          />
                          {/* <Field
                             placeholder='Ex: 120'

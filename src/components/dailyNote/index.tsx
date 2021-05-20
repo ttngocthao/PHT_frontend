@@ -41,8 +41,9 @@ const DailyNote = ({fastingHours,sleepingHours,date,note,fastingProtocol,medicat
                         </li>
                     )}
                 </ul>
+                <br/>
             </div>}
-            <br/>
+            
             {bloodPressure && bloodPressure?.length!==0 && <div>
                 <h3>Blood Pressure</h3>
                 <ul>
@@ -53,9 +54,9 @@ const DailyNote = ({fastingHours,sleepingHours,date,note,fastingProtocol,medicat
                             <span>{item.time}</span>
                         </li>
                     )}
-                </ul>    
+                </ul> <br/>    
             </div>} 
-            <br/>
+           
             {bloodGlucose && bloodGlucose?.length!==0 && <div>
                 <h3>Blood Glucose</h3>
                 <ul>
@@ -66,14 +67,14 @@ const DailyNote = ({fastingHours,sleepingHours,date,note,fastingProtocol,medicat
                             <span> {item.time}</span>
                         </li>
                     )}
-                </ul>    
+                </ul>    <br/> 
             </div>}
-            <br/>
+           
             {activities && <div>
                 <h3>Activities or Events</h3>
-                <p>{activities}</p>
+                <p>{activities}</p> <br/>
             </div>}
-            <br/>
+           
             {beverages && <div>
                 <h3>Beverages</h3>
                 <p>{beverages}</p>
