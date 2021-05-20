@@ -56,7 +56,8 @@ const DateDetails = () => {
            
         </div>;
     }
-    const {fastingHours,sleepingHours,date,note}=selectedDayNote;
+    const {fastingHours,sleepingHours,date,note,medication,bloodGlucose,bloodPressure,activities,beverages}=selectedDayNote;
+
     const fastingProtocol = ():string=>{
         let countMeals = 0;
         let protocol ='';
@@ -97,7 +98,13 @@ const DateDetails = () => {
                 date={date} 
                 note={note}
                 fastingProtocol={fastingProtocol()}
-                />
+                medication={medication}
+                bloodPressure={bloodPressure}
+                bloodGlucose={bloodGlucose}
+                activities={activities}
+                beverages={beverages}
+            />
+            
             <h3>Breakfast</h3>
             {selectedDayNote.breakfast ? <MealNote data={selectedDayNote.breakfast} /> : <button onClick={()=>showMealFormHandle(selectedDayNote.id,'Breakfast')}>Add Breakfast details</button> }
             <br/>
