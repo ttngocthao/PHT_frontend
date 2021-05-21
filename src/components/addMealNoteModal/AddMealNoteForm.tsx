@@ -1,7 +1,7 @@
 import React from 'react';
 import {format} from 'date-fns';
 import { Formik,Form,Field } from 'formik';
-import { TextField } from '../formHelper';
+import { CheckboxField, TextField } from '../formHelper';
 import {Button} from 'semantic-ui-react';
 import {EntryMealNoteFormValue, MealType} from '../../types';
 import {RootState} from '../../store';
@@ -57,7 +57,8 @@ const AddMealNoteForm = ({onSubmit}:Props) => {
                 username:'mum',
                 date:format(selectedDate, "ccc dd MMM yy"),//from store
                 mealType:convertMealTypeStringToEnum(selectedMealType),//from store
-                menuDetails:''
+                menuDetails:'',
+                skippedMeal:false
             }}
             validate={(values)=>validate(values)}
             onSubmit={onSubmit}
@@ -65,11 +66,20 @@ const AddMealNoteForm = ({onSubmit}:Props) => {
                {({isValid,dirty})=> {
                 return(
                     <Form className="form ui">
-                         
+                          {/* <label>
+                            <Field type="checkbox" name="skippedMeal" />
+                            Skipped this meal
+                          </label>
+                          <br/> */}
+                          <Field
+                            label='Skipped this meal'
+                            name='skippedMeal'
+                            component={CheckboxField}
+                          />
                          <Field
-                            placeholder='Ex: 2eggs, ham, cheese, avocado, coffee with cream'
+                            placeholder='Ex: 2eggs / black coffee with during fasting'
                             name='menuDetails'
-                            label='Meal includes'
+                            label='Meal includes / Or Fasting Liquids'
                             component={TextField}
                             multiLines={true}
                          />

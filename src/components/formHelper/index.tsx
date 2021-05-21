@@ -30,6 +30,7 @@ const StyledSmallInput = styled(Input)({
     width:'150px',
     display:'inline-block'
 });
+
 export const SmallTextField =({field,placeholder}:SmallTextFieldProps)=>{
     return(
        
@@ -49,44 +50,6 @@ export const StyledGroupSmallInputs = styled('div')({
     alignItems:'center',
     marginBottom:'10px'
 });
-// interface ArrayTextFieldProps extends FieldProps{
-//     label:string
-//     placeholder1: string
-//     placeholder2: string
-//     values?: Measurement[] | Medication[]
-    
-// }
-// export const ArrayTextField = ({field,label,placeholder1,placeholder2,values}:ArrayTextFieldProps)=>{
-//     return(
-//         <>
-//         <div className='field'>
-//             <label >{label}</label>
-//         </div>
-        
-//         <div>
-//             {values && values.map((m,i)=>(
-//                 <div key={i} style={{display:'flex', justifyContent:'space-between',alignItems:'center',marginBottom:'10px'}}>
-//                     <Field                                                    
-//                         placeholder={placeholder1}
-//                         name={`medication.${i}.medName`}
-//                         component={SmallTextField}
-//                         />
-//                     <span>at</span>  
-//                     <Field
-//                         component={SmallTextField}
-//                         placeholder={placeholder2}
-//                         name={`medication.${i}.time`}
-//                     />
-                        
-//                 </div>
-//             ))}
-//             <Button type='button' onClick={()=>arrayHelpers.push({medName:'',time:''})}>
-//                 Add more Medication or Supplement
-//             </Button>
-//         </div>
-//         </>
-//     );
-// };
 
 
 type SelectFieldProps ={
@@ -106,6 +69,29 @@ export const SelectField =({name,label,options}:SelectFieldProps)=>{
                     </option>
                 ))}
             </Field>
+        </Form.Field>
+    );
+};
+
+interface CheckboxFieldProps extends FieldProps{    
+    label:string
+}
+
+export const CheckboxField =({label,field}:CheckboxFieldProps)=>{
+    return (
+        <Form.Field>
+        <Field                        
+            render={()=>{
+               return(<div  className='ui checkbox'>
+                <input
+                type="checkbox"
+                {...field}
+              />
+              <label>{label}</label>
+              </div>
+               );
+           }}
+        />
         </Form.Field>
     );
 };
