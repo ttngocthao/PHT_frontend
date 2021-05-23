@@ -64,7 +64,7 @@ const AddDailyNoteEntryForm = ({onSubmit}:Props) => {
                     <Form className="form ui">
                          
                           <Field
-                            placeholder='Ex: slept well last night...etc'
+                            placeholder='Ex: slept well last night, constipation, menstruation starts...etc'
                             name='note'
                             label='How are you feeling today?'
                             component={TextField}

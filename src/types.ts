@@ -73,7 +73,8 @@ export type DailyNoteState = {
     dailyNotes: IDailyNote[]|[],
     selectedDayNote: IDailyNote | undefined
     selectedDate: Date 
-    selectedMealType: string | undefined
+    selectedMealType: string | undefined,
+    currentUser:string|undefined
 };
 
 

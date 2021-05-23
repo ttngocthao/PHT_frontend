@@ -84,11 +84,16 @@ export const setSelectedMealType =(selectedMealType:string)=>{
 
 export const addMealNote = (newMealNote: EntryMealNoteFormValue )=>{
     return async (dispatch:DispatchType)=>{
+      try {
         const mealNote = await mealNotesService.add(newMealNote);
         const action: DailyNoteAction ={
             type: actionTypes.ADD_MEALNOTE,
             payload: mealNote
         };
         return dispatch(action);
+      } catch (error) {
+        console.log(error);
+      }
+        
     };
 };

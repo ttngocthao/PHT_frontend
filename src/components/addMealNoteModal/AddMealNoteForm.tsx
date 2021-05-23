@@ -7,18 +7,13 @@ import {EntryMealNoteFormValue, MealType} from '../../types';
 import {RootState} from '../../store';
 import { useSelector } from 'react-redux';
 
-// const mealTypeOptions:MealTypeOption[]=[
-//     {value: MealType.Breakfast,label:'Breakfast'},
-//     {value: MealType.Lunch,label:'Lunch'},
-//     {value: MealType.Dinner,label:'Dinner'},
-// ];
+
 interface Props {
   onSubmit: (values:EntryMealNoteFormValue)=>void
 }
 const AddMealNoteForm = ({onSubmit}:Props) => {
     const {selectedDate,selectedMealType} = useSelector((state:RootState)=>({selectedDate: state.dailyNotes.selectedDate,selectedMealType: state.dailyNotes.selectedMealType}));
-    // const selectedDate:Date = useSelector((state:RootState)=>state.dailyNotes.selectedDate);
-    // const selectedMealType:string|undefined= useSelector((state:RootState)=> state.mealNotes.selectedMealType);
+    
 
     const convertMealTypeStringToEnum =(str:string|undefined):MealType=>{
       if(!str){
@@ -66,51 +61,19 @@ const AddMealNoteForm = ({onSubmit}:Props) => {
                {({isValid,dirty})=> {
                 return(
                     <Form className="form ui">
-                          {/* <label>
-                            <Field type="checkbox" name="skippedMeal" />
-                            Skipped this meal
-                          </label>
-                          <br/> */}
+                          
                           <Field
                             label='Skipped this meal'
                             name='skippedMeal'
                             component={CheckboxField}
                           />
                          <Field
-                            placeholder='Ex: 2eggs / black coffee with during fasting'
+                            placeholder='Ex: 2eggs / black coffee during fasting'
                             name='menuDetails'
-                            label='Meal includes / Or Fasting Liquids'
+                            label='Meal includes / Fasting Liquids'
                             component={TextField}
                             multiLines={true}
-                         />
-                         {/* <Field
-                            placeholder='Ex: 120'
-                            name='bgBe4Meal'
-                            label='Blood glucose before meal'
-                            unit='mg/dl'
-                            component={TextField}
-                          />
-                          <Field
-                            placeholder='Ex: 120'
-                            name='bgAftMeal'
-                            label='Blood glucose after meal'
-                            unit='mg/dl'
-                            component={TextField}
-                          />
-                          <Field
-                            placeholder='Ex: xyz'
-                            name='bpBe4Meal'
-                            label='Blood pressure before meal'
-                            unit='mm/Hg'
-                            component={TextField}
-                          />
-                          <Field
-                            placeholder='Ex: xyz'
-                            name='bpAftMeal'
-                            label='Blood pressure after meal'
-                            unit='mm/Hg'
-                            component={TextField}
-                          /> */}
+                         />                         
                           <Button
                             type='submit'
                             floated='right'

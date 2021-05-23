@@ -5,7 +5,8 @@ const initialState: DailyNoteState={
     dailyNotes:[],
     selectedDayNote: undefined,
     selectedDate: new Date(),
-    selectedMealType: undefined
+    selectedMealType: undefined,
+    currentUser:'Mum'
 };
 
 
@@ -29,9 +30,13 @@ const reducer =(state:DailyNoteState = initialState,action: DailyNoteAction):Dai
             return {...state, selectedMealType: action.payload};
         case actionTypes.ADD_MEALNOTE:
             const newAddedMeal = action.payload;
-            const mealType = newAddedMeal.mealType;
+            const mealType = newAddedMeal.mealType.toLowerCase();
+            console.log('mealType',mealType);
             const selectedDayNote = {...state.selectedDayNote, [mealType]:newAddedMeal} as IDailyNote;
-            return {...state,selectedDayNote:selectedDayNote};
+            console.log('selectedDayNote',selectedDayNote);
+            const updatedAllNotes = state.dailyNotes.map((item:IDailyNote)=>item.date === selectedDayNote.date ? selectedDayNote : item);
+            console.log('updatedAllNotes',updatedAllNotes);
+            return {...state,dailyNotes: updatedAllNotes,selectedDayNote:selectedDayNote};
         default:
             return state;
     }

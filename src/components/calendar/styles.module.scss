@@ -1,7 +1,7 @@
 /* FONT IMPORTS */
 
-@import url(https://fonts.googleapis.com/css?family=Open + Sans:300, 400, 700);
-@import url(https://fonts.googleapis.com/icon?family=Material + Icons);
+// @import url(https://fonts.googleapis.com/css?family=Open + Sans:300, 400, 700);
+// @import url(https://fonts.googleapis.com/icon?family=Material + Icons);
 
 .icon {
   font-family: "Material Icons", serif;
@@ -177,11 +177,13 @@ main {
   border-image: linear-gradient(45deg, #1a8fff 0%, #53cbf1 40%);
   border-image-slice: 1;
 }
+
 .calendar .body .today {
   border-left: 10px solid transparent;
   border-image: linear-gradient(45deg, #ff1a79 0%, #eb82b3 40%);
   border-image-slice: 1;
 }
+
 .calendar .body .row {
   border-bottom: 1px solid var(--border-color);
 }
@@ -226,6 +228,7 @@ main {
   opacity: 0.05;
   transition: 0.5s ease-in;
 }
+
 .calendar .body .cell.today .bg {
   color: #ff1a79;
   opacity: 0.05;

@@ -47,7 +47,7 @@ const DateDetails = () => {
             <br/>
             <br/>
             {/* <button onClick={()=>setShowForm(true)}>Add Daily Note Details</button> */}
-            <Button onClick={()=>setShowForm(true)} className='ui button' color='green'>Add Daily Note Details</Button>
+            <Button onClick={()=>setShowForm(true)} className='ui button' color='teal'>Add Daily Note Details</Button>
             <AddDailyNoteModal 
                 modalOpen={showForm} 
                 onClose={()=>setShowForm(false)}
@@ -106,13 +106,28 @@ const DateDetails = () => {
             />
             
             <h3>Breakfast</h3>
-            {selectedDayNote.breakfast ? <MealNote data={selectedDayNote.breakfast} /> : <button onClick={()=>showMealFormHandle(selectedDayNote.id,'Breakfast')}>Add Breakfast details</button> }
+            {selectedDayNote.breakfast ? 
+                <MealNote data={selectedDayNote.breakfast} /> : 
+                <Button className='ui button' color='teal' onClick={()=>showMealFormHandle(selectedDayNote.id,'Breakfast')}>
+                    Add Breakfast details
+                </Button> 
+                }
             <br/>
             <h3>Lunch</h3>
-            {selectedDayNote.lunch ? <MealNote data={selectedDayNote.lunch} /> : <button onClick={()=>alert('add lunch details')}>Add Lunch details</button>}
+            {selectedDayNote.lunch ? 
+                <MealNote data={selectedDayNote.lunch} /> : 
+                <Button className='ui button' color='teal' onClick={()=>showMealFormHandle(selectedDayNote.id,'Lunch')}>
+                    Add Lunch details
+                </Button>
+            }
             <br/>
             <h3>Dinner</h3>
-            {selectedDayNote.dinner ? <MealNote data={selectedDayNote.dinner} /> :<button onClick={()=>alert('add dinner details')}>Add Dinner details</button>}
+            {selectedDayNote.dinner ? 
+                <MealNote data={selectedDayNote.dinner} /> :
+                <Button className='ui button' color='teal' onClick={()=>showMealFormHandle(selectedDayNote.id,'Dinner')}>
+                    Add Dinner details
+                </Button>
+            }
             <br/>
             <AddMealNoteModal 
                 modalOpen={showMealForm} 

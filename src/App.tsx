@@ -7,6 +7,8 @@ import {initDailyNotes} from './state/actionCreators/dailyNote.actionCreators';
 import HomePage from './views/homepage';
 import WeeklyViewPage from './views/weeklyViewPage';
 
+import Header from './components/header/Header';
+
 function App() {
   const dispatch = useDispatch();
  
@@ -15,19 +17,23 @@ function App() {
   }, [dispatch]);
   
   return (
-    <div style={{padding:'10px',maxWidth:'600px'}}>
-     <h1>Personal Health Tracker</h1>   
-      <Router>
-        <Switch>
-          <Route path='/weekly-view'>
-            <WeeklyViewPage/>
-          </Route>
-          <Route path='/'>
-            <HomePage/>
-          </Route>
-        </Switch>
-      </Router>
-    </div>
+    <section style={{maxWidth:'600px'}}>
+      
+        <Router>
+          <Header/>
+          <main style={{padding:'10px',marginTop:'2rem'}}>
+            <Switch>
+              <Route path='/weekly-view'>
+                <WeeklyViewPage/>
+              </Route>
+              <Route path='/'>
+                <HomePage/>
+              </Route>
+            </Switch>
+          </main>
+        </Router>
+          
+    </section>
   );
 }
 

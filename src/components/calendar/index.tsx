@@ -10,7 +10,7 @@ import {
   addWeeks,
   subWeeks
 } from "date-fns";
-import styles from './styles.module.css';
+import styles from './styles.module.scss';
 import { useDispatch, useSelector } from 'react-redux';
 import {getDayNote, setSelectedDate} from '../../state/actionCreators/dailyNote.actionCreators';
 import { RootState } from '../../store';

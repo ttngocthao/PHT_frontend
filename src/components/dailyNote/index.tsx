@@ -1,5 +1,6 @@
 import React from 'react';
 import { Measurement, Medication } from '../../types';
+import DateIcon from '../dateIcon/DateIcon';
 
 interface Props {
     fastingHours?:string
@@ -17,19 +18,22 @@ interface Props {
 const DailyNote = ({fastingHours,sleepingHours,date,note,fastingProtocol,medication,bloodPressure,bloodGlucose,activities,beverages}:Props) => {
     return (
         <div style={{paddingTop:'2rem'}}>
-            <h2>It&#39;s {date} - {fastingProtocol} {medication?.length===0 && ' - No Med'}</h2>
-            <div>
-                <p>Fasting hours: {fastingHours} hours</p>
-                <p>Sleeping hours: {sleepingHours} hours</p>
+            <div style={{display:'flex', alignItems:'center'}}>
+                <DateIcon date={date}/>
+                <h2 style={{marginTop:0}}>{fastingProtocol} {medication?.length===0 && ' - No Med'}</h2>
             </div>
             <br/>
             <div>
-                <h3>Other note: constipation, menstruation starts...etc </h3>
-                <div>
-                    {note}
-                </div>
+                <h3>Fasting hours</h3>
+                <p>{fastingHours} hours</p>
             </div>
             <br/>
+            <div>
+               <h3>Sleeping hours: </h3>
+                <p>{sleepingHours} hours</p>
+            </div>
+            <br/>
+            
             {medication && medication?.length!==0 && <div>
                 <h3>Medication</h3>
                 <ul>
@@ -77,8 +81,16 @@ const DailyNote = ({fastingHours,sleepingHours,date,note,fastingProtocol,medicat
            
             {beverages && <div>
                 <h3>Beverages</h3>
-                <p>{beverages}</p>
+                <p>{beverages}</p><br/>
             </div>}
+
+            {note && <div>
+                <h3>Other note</h3>
+                <div>
+                    {note}
+                </div> <br/>
+            </div>
+           }
         </div>
     );
 };

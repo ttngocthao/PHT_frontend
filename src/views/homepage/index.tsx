@@ -1,9 +1,13 @@
 import React from 'react';
+import Greeting from '../../components/greeting/Greeting';
+import FeatureList from '../../components/homeFeatures/FeatureList';
+
 
 const HomePage =()=>{
     return(
         <div>
-           Hello user 
+           <Greeting/>
+          <FeatureList/>
         </div>
     );
 };
