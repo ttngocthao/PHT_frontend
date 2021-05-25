@@ -5,7 +5,7 @@ import { RootState } from '../../store';
 const Greeting = () => {
   const currentUser = useSelector((state:RootState)=>state.dailyNotes.currentUser);
   return (
-    <div>
+    <div >
       Hello {currentUser}
     </div>
   );

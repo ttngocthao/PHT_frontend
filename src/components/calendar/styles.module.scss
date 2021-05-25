@@ -115,7 +115,7 @@ main {
   display: block;
   position: relative;
   width: 100%;
-  background: var(--neutral-color);
+  background: #f8f8fa;
   border: 1px solid var(--border-color);
   max-width: 600px;
 }
@@ -150,7 +150,7 @@ main {
 .calendar .days {
   text-transform: uppercase;
   font-weight: 400;
-  color: var(--text-color-light);
+  color: gray;
   font-size: 70%;
   padding: 0.75em 0;
   border-bottom: 1px solid var(--border-color);
@@ -162,7 +162,7 @@ main {
   border-right: 1px solid var(--border-color);
   overflow: hidden;
   cursor: pointer;
-  background: var(--neutral-color);
+  background: #f8fafa;
   transition: 0.25s ease-out;
   font-size: 1.5em;
 }

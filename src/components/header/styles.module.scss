@@ -1,8 +1,13 @@
+@import '../../variables.scss';
+
 .header {
   display: flex;
   padding: 10px;
+  background-color: $darkTeal;
 }
-
+.h1{
+  color:white;
+}
 .figure {
   margin: 0 1rem 0 0;
 }

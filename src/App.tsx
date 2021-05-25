@@ -1,4 +1,4 @@
-import React,{useEffect} from 'react';
+import React,{Fragment, useEffect} from 'react';
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 
 import {useDispatch} from 'react-redux';
@@ -8,6 +8,7 @@ import HomePage from './views/homepage';
 import WeeklyViewPage from './views/weeklyViewPage';
 
 import Header from './components/header/Header';
+import GlobalStyle from './GlobalStyles';
 
 function App() {
   const dispatch = useDispatch();
@@ -17,11 +18,13 @@ function App() {
   }, [dispatch]);
   
   return (
+    <Fragment>
+    <GlobalStyle/>
     <section style={{maxWidth:'600px'}}>
       
         <Router>
           <Header/>
-          <main style={{padding:'10px',marginTop:'2rem'}}>
+          <main style={{padding:'10px',marginTop:'0rem'}}>
             <Switch>
               <Route path='/weekly-view'>
                 <WeeklyViewPage/>
@@ -34,6 +37,7 @@ function App() {
         </Router>
           
     </section>
+    </Fragment>
   );
 }
 
