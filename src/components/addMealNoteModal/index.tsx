@@ -11,19 +11,20 @@ interface Props {
   modalOpen: boolean;
   onClose: () => void;
   onSubmit:(values: EntryMealNoteFormValue)=>void;
+  editMode:boolean;
   error?: string;
 }
 
 
-const AddMealNoteModal = ({modalOpen,onClose,error,onSubmit}:Props) => {
+const AddMealNoteModal = ({modalOpen,onClose,error,onSubmit,editMode}:Props) => {
   const selectedMealType = useSelector((state:RootState)=>state.dailyNotes.selectedMealType);
   const selectedDate = useSelector((state:RootState)=>state.dailyNotes.selectedDate);
     return (
         <Modal open={modalOpen} onClose={onClose} closeIcon>
-            <Modal.Header>Add {selectedMealType} - {format(selectedDate, "ccc dd MMM")}</Modal.Header>
+            <Modal.Header>{editMode ? 'Edit':'Add'} {selectedMealType} - {format(selectedDate, "ccc dd MMM")}</Modal.Header>
             <Modal.Content>
             {error && <Segment inverted color="red">{`Error: ${error}`}</Segment>}
-            <AddMealNoteForm onSubmit={onSubmit}/>
+            <AddMealNoteForm onSubmit={onSubmit} editMode={editMode}/>
             </Modal.Content>            
         </Modal>
     );

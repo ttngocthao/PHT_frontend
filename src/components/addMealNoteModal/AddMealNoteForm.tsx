@@ -3,17 +3,24 @@ import {format} from 'date-fns';
 import { Formik,Form,Field } from 'formik';
 import { CheckboxField, TextField } from '../formHelper';
 import {Button} from 'semantic-ui-react';
-import {EntryMealNoteFormValue, MealType} from '../../types';
+import {EntryMealNoteFormValue,MealNoteEntry,MealType} from '../../types';
 import {RootState} from '../../store';
 import { useSelector } from 'react-redux';
 
 
 interface Props {
   onSubmit: (values:EntryMealNoteFormValue)=>void
+  editMode: boolean
 }
-const AddMealNoteForm = ({onSubmit}:Props) => {
-    const {selectedDate,selectedMealType} = useSelector((state:RootState)=>({selectedDate: state.dailyNotes.selectedDate,selectedMealType: state.dailyNotes.selectedMealType}));
+const AddMealNoteForm = ({onSubmit,editMode}:Props) => {
+    const {selectedDate,selectedMealType,selectedDayNote} = useSelector((state:RootState)=>({
+      selectedDate: state.dailyNotes.selectedDate,
+      selectedMealType: state.dailyNotes.selectedMealType,
+      selectedDayNote: state.dailyNotes.selectedDayNote
+      
+      }));
     
+ 
 
     const convertMealTypeStringToEnum =(str:string|undefined):MealType=>{
       if(!str){
@@ -43,6 +50,27 @@ const AddMealNoteForm = ({onSubmit}:Props) => {
       
         return errors;
     };
+//console.log('selectedMealType',selectedMealType,editMode);
+const getCurrentMealNoteData =()=>{
+ const mt = selectedMealType?.toLowerCase();
+  let currentMealNoteData: MealNoteEntry | undefined;
+  switch(mt){
+    case 'breakfast':
+      currentMealNoteData = selectedDayNote?.breakfast;
+      break;
+    case 'lunch':
+      currentMealNoteData = selectedDayNote?.lunch;
+      break;
+    case 'dinner':
+      currentMealNoteData = selectedDayNote?.dinner;
+      break;
+    default:
+       currentMealNoteData = undefined;
+    break;
+  }
+  console.log('current meal data',currentMealNoteData);
+ return currentMealNoteData;
+};
 
     return (
         <div>
@@ -51,9 +79,9 @@ const AddMealNoteForm = ({onSubmit}:Props) => {
             initialValues={{
                 username:'mum',
                 date:format(selectedDate, "ccc dd MMM yy"),//from store
-                mealType:convertMealTypeStringToEnum(selectedMealType),//from store
-                menuDetails:'',
-                skippedMeal:false
+                mealType: convertMealTypeStringToEnum(selectedMealType),//from store
+                menuDetails:editMode ? getCurrentMealNoteData()?.menuDetails : '',
+                skippedMeal:editMode ? getCurrentMealNoteData()?.skippedMeal :false
             }}
             validate={(values)=>validate(values)}
             onSubmit={onSubmit}

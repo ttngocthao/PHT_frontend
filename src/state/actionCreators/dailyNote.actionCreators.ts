@@ -60,6 +60,21 @@ export const addDailyNote =(dailyNote: EntryDailyNoteFormValue)=>{
   };
 };
 
+export const updateDailyNote = (noteId:string,dailyNoteValue:EntryDailyNoteFormValue)=>{  
+
+  return async (dispatch:DispatchType)=>{
+
+    const updatedDailyNote = await dailyNoteService.update(noteId,dailyNoteValue);
+
+    const action: DailyNoteAction ={
+      type: actionTypes.UPDATE_DAILYNOTE,
+      payload: updatedDailyNote
+    };
+
+    return dispatch(action);
+  };
+};
+
 export const setSelectedDate =(selectedDate:Date)=>{
   return (dispatch:DispatchType)=>{
     const action: DailyNoteAction ={
@@ -71,6 +86,7 @@ export const setSelectedDate =(selectedDate:Date)=>{
 };
 
 export const setSelectedMealType =(selectedMealType:string)=>{
+
     return(dispatch:DispatchType)=>{
 
         const action: DailyNoteAction ={
@@ -83,17 +99,32 @@ export const setSelectedMealType =(selectedMealType:string)=>{
 };
 
 export const addMealNote = (newMealNote: EntryMealNoteFormValue )=>{
+
     return async (dispatch:DispatchType)=>{
+
       try {
+
         const mealNote = await mealNotesService.add(newMealNote);
+
         const action: DailyNoteAction ={
             type: actionTypes.ADD_MEALNOTE,
             payload: mealNote
         };
+
         return dispatch(action);
+
       } catch (error) {
         console.log(error);
       }
         
     };
+};
+
+export const toggleEditMode = ()=>{
+  return (dispatch:DispatchType)=>{
+    const action: DailyNoteAction={
+      type: actionTypes.TOGGLE_EDITMODE
+    };
+    return dispatch(action);
+  };
 };

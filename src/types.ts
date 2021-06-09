@@ -74,7 +74,8 @@ export type DailyNoteState = {
     selectedDayNote: IDailyNote | undefined
     selectedDate: Date 
     selectedMealType: string | undefined,
-    currentUser:string|undefined
+    currentUser:string|undefined,
+    editMode: boolean
 };
 
 
@@ -104,13 +105,15 @@ export type DailyNoteAction = {
     payload: Date 
 }|{
     type:'UPDATE_DAILYNOTE'
-    payload?:string
+    payload:IDailyNote
 }|{
     type:'SELECT_MEALTYPE'
     payload: string
 }|{
     type:'ADD_MEALNOTE'
     payload:MealNoteEntry
+}|{
+    type:'TOGGLE_EDITMODE'
 };
 
 

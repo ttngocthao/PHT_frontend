@@ -1,4 +1,5 @@
 import React from 'react';
+import { Button } from 'semantic-ui-react';
 import { Measurement, Medication } from '../../types';
 import DateIcon from '../dateIcon/DateIcon';
 
@@ -13,26 +14,31 @@ interface Props {
     bloodGlucose?:Measurement[]|[]
     activities?:string
     beverages?:string
+    editMode:boolean
+    editDayNoteHandle:()=>void
 }
 
-const DailyNote = ({fastingHours,sleepingHours,date,note,fastingProtocol,medication,bloodPressure,bloodGlucose,activities,beverages}:Props) => {
+const DailyNote = ({fastingHours,sleepingHours,date,note,fastingProtocol,medication,bloodPressure,bloodGlucose,activities,beverages,editDayNoteHandle,editMode}:Props) => {
     return (
         <div style={{paddingTop:'2rem'}}>
             <div style={{display:'flex', alignItems:'center'}}>
                 <DateIcon date={date}/>
                 <h2 style={{marginTop:0}}>{fastingProtocol} {medication?.length===0 && ' - No Med'}</h2>
+                {editMode && <Button color='orange' onClick={editDayNoteHandle}>Edit General Details</Button>}
             </div>
             <br/>
-            <div>
+            {fastingHours &&  <div>
                 <h3>Fasting hours</h3>
-                <p>{fastingHours} hours</p>
-            </div>
-            <br/>
-            <div>
+                <p>{fastingHours} hours</p> <br/>
+            </div>}
+           
+           {sleepingHours &&    <div>
                <h3>Sleeping hours: </h3>
-                <p>{sleepingHours} hours</p>
-            </div>
-            <br/>
+                <p>{sleepingHours} hours</p><br/>
+            </div>}
+           
+         
+            
             
             {medication && medication?.length!==0 && <div>
                 <h3>Medication</h3>

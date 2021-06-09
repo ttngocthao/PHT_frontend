@@ -76,11 +76,25 @@ export const SelectField =({name,label,options}:SelectFieldProps)=>{
 interface CheckboxFieldProps extends FieldProps{    
     label:string
 }
-
+/**
+ * To get rid of this warning, replace <Field name="undefined" render={({field, form}) => ...} /> 
+ * with <Field name="undefined">{({field, form, meta}) => ...}</Field>
+ */
 export const CheckboxField =({label,field}:CheckboxFieldProps)=>{
+    console.log('checkbox field',field);
     return (
         <Form.Field>
-        <Field                        
+        <Field>
+           {()=> <div  className='ui checkbox'>
+                <input
+                type="checkbox"
+                checked={field.value ? true : false}
+                {...field}
+              />
+              <label>{label}</label>
+              </div>}
+        </Field>
+        {/* <Field                        
             render={()=>{
                return(<div  className='ui checkbox'>
                 <input
@@ -91,7 +105,7 @@ export const CheckboxField =({label,field}:CheckboxFieldProps)=>{
               </div>
                );
            }}
-        />
+        /> */}
         </Form.Field>
     );
 };

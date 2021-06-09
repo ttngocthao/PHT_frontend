@@ -9,3 +9,5 @@ export const SELECT_DATE = 'SELECT_DATE';
 export const SELECT_MEALTYPE='SELECT_MEALTYPE';
 
 export const ADD_MEALNOTE='ADD_MEALNOTE';
+
+export const TOGGLE_EDITMODE = 'TOGGLE_EDITMODE';

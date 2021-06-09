@@ -12,4 +12,9 @@ const add = async(newDailyNote:EntryDailyNoteFormValue)=>{
     return res.data;
 };
 
-export default{getAll,add};
+const update = async(dailyNoteId:string,dailyNoteValue: Partial<EntryDailyNoteFormValue>)=>{      
+    const res = await axios.post<IDailyNote>(`${baseUrl}/update/${dailyNoteId}`,dailyNoteValue);
+    return res.data;
+};
+
+export default{getAll,add,update};

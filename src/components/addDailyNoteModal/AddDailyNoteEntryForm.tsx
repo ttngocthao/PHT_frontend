@@ -19,11 +19,15 @@ import {EntryDailyNoteFormValue,DailyNoteState} from '../../types';
 
 interface Props {
     onSubmit: (values:EntryDailyNoteFormValue)=>void
+    editMode?: boolean
 }
-const AddDailyNoteEntryForm = ({onSubmit}:Props) => {
+const AddDailyNoteEntryForm = ({onSubmit,editMode}:Props) => {
     const dailyNoteState:DailyNoteState = useSelector((state:RootState)=>state.dailyNotes);
+    const selectedDayNote = useSelector((state:RootState)=>state.dailyNotes.selectedDayNote);
     const {selectedDate}= dailyNoteState;
-    
+    //! if editMode is true, get selectedDailyNote from Store
+    //! pass it into initial Values.
+
     // const validate=(values:DailyNoteFormValues)=>{
     //     const requiredError = "Field is required";
     //     // const dateError = 'Incorrect date format';
@@ -32,26 +36,32 @@ const AddDailyNoteEntryForm = ({onSubmit}:Props) => {
       
     //     return errors;
     // };
+    if(editMode){
+        console.log('selectedDayNote',selectedDayNote);
+    }
    
+  
+
+
     return (
         <Formik
             initialValues={{
                 date:format(selectedDate, "ccc dd MMM yy"),
                 username:'mum',//this will be replaced to dynamic username 
-                note:'',
-                fastingHours:'',
-                sleepingHours:'',
-                activities:'',
-                beverages:'',
-                bloodGlucose:[{
+                note:editMode ? (selectedDayNote?.note || '') :'',
+                fastingHours: editMode ? (selectedDayNote?.fastingHours || '') : '',
+                sleepingHours: editMode ? (selectedDayNote?.sleepingHours || '') : '',
+                activities: editMode ?( selectedDayNote?.activities || '') :'',
+                beverages: editMode ? (selectedDayNote?.beverages || '') :'',
+                bloodGlucose:editMode? selectedDayNote?.bloodGlucose :[{
                     time:'',
                     readingNo:''
                 }],
-                bloodPressure:[{
+                bloodPressure:editMode ? selectedDayNote?.bloodPressure : [{
                     time:'',
                     readingNo:''
                 }],
-                medication:[{
+                medication: editMode ? selectedDayNote?.medication: [{
                     time:'',
                     medName:''
                 }]
@@ -120,7 +130,7 @@ const AddDailyNoteEntryForm = ({onSubmit}:Props) => {
                                             </StyledGroupSmallInputs>
                                         ))}
                                         <Button type='button' onClick={()=>arrayHelpers.push({medName:'',time:''})}>
-                                            Add more Measurement
+                                            Add more Medication/Supplement
                                         </Button>
                                     </div>
                                     </>
@@ -153,7 +163,7 @@ const AddDailyNoteEntryForm = ({onSubmit}:Props) => {
                                             </StyledGroupSmallInputs>
                                         ))}
                                         <Button type='button' onClick={()=>arrayHelpers.push({readingNo:'',time:''})}>
-                                            Add more Medication or Supplement
+                                            Add more Measurement  
                                         </Button></div>
                                        
                                     </>
@@ -199,8 +209,9 @@ const AddDailyNoteEntryForm = ({onSubmit}:Props) => {
                             type='submit'
                             floated='right'
                             disabled={!dirty || !isValid}
+                            color={isValid ? 'orange' :'grey'}
                         >
-                            Save Note
+                           {editMode ? 'Finish Editing' : 'Save new note' }
                         </Button>
                     </Form>
                 );
