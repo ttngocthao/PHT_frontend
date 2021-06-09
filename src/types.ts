@@ -114,6 +114,9 @@ export type DailyNoteAction = {
     payload:MealNoteEntry
 }|{
     type:'TOGGLE_EDITMODE'
+}|{
+    type:'UPDATE_MEALNOTE'
+    payload:MealNoteEntry
 };
 
 

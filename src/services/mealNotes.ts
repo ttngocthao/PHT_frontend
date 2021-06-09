@@ -7,4 +7,9 @@ const add = async(newMealNote:EntryMealNoteFormValue)=>{
     return res.data;
 };
 
-export default{add};
+const update = async(mealNoteId:string,mealNoteValue:EntryMealNoteFormValue)=>{
+    const res = await axios.post<MealNoteEntry>(`${baseUrl}/${mealNoteId}`,mealNoteValue);
+    return res.data;
+};
+
+export default{add,update};

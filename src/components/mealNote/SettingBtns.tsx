@@ -4,14 +4,14 @@ import { Button } from 'semantic-ui-react';
 interface Props{
     mealType:string
     editMealMode:boolean
-    editMealHandle: ()=>void
+    editMealHandle: (mealType:string)=>void
 }
 
 const SettingBtns = ({mealType,editMealMode,editMealHandle}:Props) => {
     return (
         <div>
-            <Button color='orange' onClick={editMealHandle}>{editMealMode ? 'Finish Editing' : `Edit ${mealType} Details`}</Button>
-            <Button color='red' onClick={()=>alert('confirm delete')}>Delete {mealType} details</Button>
+            <Button color='orange' onClick={()=>editMealHandle(mealType)}>{editMealMode ? 'Finish Editing' : `Edit ${mealType} Details`}</Button>
+            <Button color='red' onClick={()=>alert('confirm delete')}>Delete {mealType} Details</Button>
 
         </div>
     );

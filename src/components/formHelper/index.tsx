@@ -81,7 +81,7 @@ interface CheckboxFieldProps extends FieldProps{
  * with <Field name="undefined">{({field, form, meta}) => ...}</Field>
  */
 export const CheckboxField =({label,field}:CheckboxFieldProps)=>{
-    console.log('checkbox field',field);
+    // console.log('checkbox field',field);
     return (
         <Form.Field>
         <Field>

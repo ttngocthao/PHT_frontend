@@ -10,7 +10,9 @@ const initialState: DailyNoteState={
     editMode:false
 };
 
-
+let mealType:string;
+let selectedDayNote : IDailyNote;
+let updatedAllNotes:IDailyNote[];
 
 const reducer =(state:DailyNoteState = initialState,action: DailyNoteAction):DailyNoteState=>{
     switch(action.type){
@@ -39,16 +41,22 @@ const reducer =(state:DailyNoteState = initialState,action: DailyNoteAction):Dai
 
         case actionTypes.ADD_MEALNOTE:
             const newAddedMeal = action.payload;
-            const mealType = newAddedMeal.mealType.toLowerCase();
+            mealType = newAddedMeal.mealType.toLowerCase();
             // console.log('mealType',mealType);
-            const selectedDayNote = {...state.selectedDayNote, [mealType]:newAddedMeal} as IDailyNote;
+            selectedDayNote = {...state.selectedDayNote, [mealType]:newAddedMeal} as IDailyNote;
             // console.log('selectedDayNote',selectedDayNote);
-            const updatedAllNotes = state.dailyNotes.map((item:IDailyNote)=>item.date === selectedDayNote.date ? selectedDayNote : item);
+            updatedAllNotes = state.dailyNotes.map((item:IDailyNote)=>item.date === selectedDayNote.date ? selectedDayNote : item);
             // console.log('updatedAllNotes',updatedAllNotes);
             return {...state,dailyNotes: updatedAllNotes,selectedDayNote:selectedDayNote};
         
         case actionTypes.TOGGLE_EDITMODE:
             return {...state,editMode:!state.editMode};
+        case actionTypes.UPDATE_MEALNOTE:
+            const updatedMealNote = action.payload;
+            mealType = updatedMealNote.mealType.toLowerCase();
+            selectedDayNote = {...state.selectedDayNote,[mealType]:updatedMealNote} as IDailyNote;
+            updatedAllNotes = state.dailyNotes.map((item:IDailyNote)=>item.date === selectedDayNote.date ? selectedDayNote : item);
+            return {...state,dailyNotes:updatedAllNotes,selectedDayNote:selectedDayNote};
 
         default:
             return state;

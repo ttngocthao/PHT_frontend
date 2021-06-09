@@ -63,15 +63,19 @@ export const addDailyNote =(dailyNote: EntryDailyNoteFormValue)=>{
 export const updateDailyNote = (noteId:string,dailyNoteValue:EntryDailyNoteFormValue)=>{  
 
   return async (dispatch:DispatchType)=>{
+    try {
+      const updatedDailyNote = await dailyNoteService.update(noteId,dailyNoteValue);
 
-    const updatedDailyNote = await dailyNoteService.update(noteId,dailyNoteValue);
-
-    const action: DailyNoteAction ={
-      type: actionTypes.UPDATE_DAILYNOTE,
-      payload: updatedDailyNote
-    };
-
-    return dispatch(action);
+      const action: DailyNoteAction ={
+        type: actionTypes.UPDATE_DAILYNOTE,
+        payload: updatedDailyNote
+      };
+  
+      return dispatch(action);
+    } catch (error) {
+      console.log(error);
+    }
+   
   };
 };
 
@@ -127,4 +131,22 @@ export const toggleEditMode = ()=>{
     };
     return dispatch(action);
   };
+};
+
+
+export const updateMealNote =(mealNoteId:string,mealNoteValue:EntryMealNoteFormValue)=>{
+  try {
+    return async (dispatch:DispatchType)=>{
+      const updatedMealNote = await mealNotesService.update(mealNoteId,mealNoteValue);
+  
+      const action: DailyNoteAction={
+        type: actionTypes.UPDATE_MEALNOTE,
+        payload: updatedMealNote
+      };
+      return dispatch(action);
+    };
+  } catch (error) {
+    console.log(error);
+  }
+  
 };

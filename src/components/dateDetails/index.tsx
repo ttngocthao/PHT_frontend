@@ -9,13 +9,15 @@ import {
   addMealNote,
   updateDailyNote,
   toggleEditMode,
+  updateMealNote,
 } from "../../state/actionCreators/dailyNote.actionCreators";
 import { RootState } from "../../store";
 import AddDailyNoteModal from "../addDailyNoteModal";
 import AddMealNoteModal from "../addMealNoteModal";
 import DailyNote from "../dailyNote";
-import MealNote from "../mealNote";
-import SettingBtns from "../mealNote/SettingBtns";
+// import MealNote from "../mealNote";
+// import SettingBtns from "../mealNote/SettingBtns";
+import MealDetailsSection from "../mealNote/MealDetailsSection";
 
 //import { addMealNote,  } from '../../state/actionCreators/mealNote.actionCreators';
 
@@ -24,6 +26,7 @@ const DateDetails = () => {
   const selectedDayNote = useSelector(
     (state: RootState) => state.dailyNotes.selectedDayNote
   );
+  const selectedDate = useSelector((state:RootState)=>state.dailyNotes.selectedDate);
   const editMode = useSelector((state: RootState) => state.dailyNotes.editMode);
   const [showForm, setShowForm] = useState(false);
   const [showMealForm, setShowMealForm] = useState(false);
@@ -54,9 +57,32 @@ const DateDetails = () => {
     }
     if (!editMode) {
       dispatch(addMealNote(values)); //! add data to database - update view
+      
     }
     if (selectedDate && editMode) {
-      dispatch(updateMealNote(values));
+      const mealType = values.mealType.toLowerCase();
+      let mealNoteId:string|undefined;
+      switch(mealType){
+        case 'breakfast':
+          mealNoteId = selectedDayNote?.breakfast?.id;
+          break;
+        case 'lunch':
+          mealNoteId= selectedDayNote?.lunch?.id;
+          break;
+        case 'dinner':
+          mealNoteId = selectedDayNote?.dinner?.id;
+          break;
+        default:
+          mealNoteId=undefined;
+      }
+      
+      if(mealNoteId && values){
+        dispatch(updateMealNote(mealNoteId,values));
+        // console.log('mealNoteId',mealNoteId);
+        // console.log('updated meal note',values);
+      }
+      
+     
     }
 
     setShowMealForm(false); //! close the form
@@ -137,29 +163,21 @@ const DateDetails = () => {
 
   const editDayNoteHandle = () => {
     setShowForm(true);
-    // setEditMode(true);
+    
     if (!editMode) {
       dispatch(toggleEditMode());
     }
   };
 
   const editHandle = () => {
-    // if(!editMode){
-    //     setEditMode(true);
-    // }else{
-    //     setEditMode(false);
-    // }
     dispatch(toggleEditMode());
   };
 
-  // const closeEditing =()=>{
-  //     setShowForm(false);
-  //     // setEditMode(false);
-  // };
+ 
 
-  const editMealHandle = () => {
+  const editMealHandle = (mealType:string) => {
     setShowMealForm(true);
-    showMealFormHandle(selectedDayNote.id, "Breakfast");
+    showMealFormHandle(selectedDayNote.id, mealType);
   };
 
   return (
@@ -196,7 +214,7 @@ const DateDetails = () => {
         editMode={editMode}
       />
 
-      <h3>Breakfast</h3>
+      {/* <h3>Breakfast</h3>
       {selectedDayNote.breakfast ? (
         <>
           {editMode && (
@@ -206,9 +224,6 @@ const DateDetails = () => {
               editMealHandle={editMealHandle}
             />
           )}
-          {/* <Button color='orange' onClick={()=>alert('edit meal note')}>
-                        {editMode ? 'Finish Editing' : 'Edit Breakfast Details'}
-                    </Button> */}
           <MealNote data={selectedDayNote.breakfast} />
         </>
       ) : (
@@ -219,8 +234,29 @@ const DateDetails = () => {
         >
           Add Breakfast details
         </Button>
-      )}
-      <br />
+      )} */}
+{/* 
+      <h2>This is new section</h2>
+      <MealDetailsSection
+        mealType="Breakfast"
+        editMealMode={false}
+        editMealHandle={editMealHandle}
+        showMealFormHandle={showMealFormHandle}
+      /> */}
+      {['Breakfast','Lunch','Dinner'].map((item,index)=>{
+        return (
+          <div key={index}>
+              <MealDetailsSection           
+                mealType={item}
+                editMealHandle={editMealHandle}
+                showMealFormHandle={showMealFormHandle}
+                editMealMode={false}
+              />
+          </div>
+        
+        );
+      })}
+      {/* <br />
       <h3>Lunch</h3>
       {selectedDayNote.lunch ? (
         <MealNote data={selectedDayNote.lunch} />
@@ -245,7 +281,7 @@ const DateDetails = () => {
         >
           Add Dinner details
         </Button>
-      )}
+      )} */}
       <br />
       <AddMealNoteModal
         modalOpen={showMealForm}
