@@ -10,11 +10,13 @@ import {
   updateDailyNote,
   toggleEditMode,
   updateMealNote,
+  deleteDailyNote
 } from "../../state/actionCreators/dailyNote.actionCreators";
 import { RootState } from "../../store";
 import AddDailyNoteModal from "../addDailyNoteModal";
 import AddMealNoteModal from "../addMealNoteModal";
 import DailyNote from "../dailyNote";
+import ConfirmModal from '../confirmModal';
 // import MealNote from "../mealNote";
 // import SettingBtns from "../mealNote/SettingBtns";
 import MealDetailsSection from "../mealNote/MealDetailsSection";
@@ -28,8 +30,14 @@ const DateDetails = () => {
   );
   const selectedDate = useSelector((state:RootState)=>state.dailyNotes.selectedDate);
   const editMode = useSelector((state: RootState) => state.dailyNotes.editMode);
-  const [showForm, setShowForm] = useState(false);
+  const [showForm, setShowForm] = useState(false);//for daily form
   const [showMealForm, setShowMealForm] = useState(false);
+  const [showConfirm,setShowConfirm]=useState({
+    confirmOpened:false,
+    confirmContent: '',
+    confirmHeader: '',
+    type:''
+    });
   // const [editMode,setEditMode]= useState(false);
 
   const onSubmitDayFormHandle = (values: EntryDailyNoteFormValue) => {
@@ -173,12 +181,61 @@ const DateDetails = () => {
     dispatch(toggleEditMode());
   };
 
- 
-
   const editMealHandle = (mealType:string) => {
     setShowMealForm(true);
     showMealFormHandle(selectedDayNote.id, mealType);
   };
+
+  
+  const deleteDailyNoteConfirm =()=>{
+   setShowConfirm(
+          { confirmOpened:true,
+           confirmHeader:'Delete Daily Note?',
+           type:'dailyNote',
+           confirmContent:'This action cannot be undone. Are you sure that you want to delete it?'});
+  
+  };
+  const deleteMealNote =(mealType:string)=>{
+    setShowConfirm ({
+      confirmOpened:true,
+      confirmHeader: `Delete ${mealType} details?`,
+      type:mealType,
+      confirmContent:'This action cannot be undone. Are you sure that you want to delete it?'   
+      });
+  };
+
+  const handleConfirm =()=>{
+    switch(showConfirm.type.toLowerCase()){
+      case 'dailynote':
+        // alert('delete this date note');
+        //dispatch delete daily note here
+        dispatch(deleteDailyNote(selectedDayNote.id));
+        break;
+      case 'breakfast':
+        alert('delete this breakfast detail');
+        //dispatch delete breakfast
+        break;
+      case 'lunch':
+        alert('delete this lunch detail');
+          //dispatch delete lunch
+        break;
+      case 'dinner':
+        alert('delete this dinner detail');
+          //dispatch delete dinner
+        break;
+      default:
+        break;
+    }
+
+    setShowConfirm({
+      confirmOpened:false,
+      confirmContent:'',
+      confirmHeader:'',
+      type:''
+    });
+  };
+
+
 
   return (
     <div>
@@ -195,10 +252,9 @@ const DateDetails = () => {
         color="grey"
         size="big"
         icon="trash alternate outline"
-        onClick={() => alert("show confirm window")}
+        onClick={deleteDailyNoteConfirm}
       />
-      {/* <Icon name='edit outline' size='large'/>
-            </Button> */}
+    
       <DailyNote
         fastingHours={fastingHours}
         sleepingHours={sleepingHours}
@@ -214,35 +270,7 @@ const DateDetails = () => {
         editMode={editMode}
       />
 
-      {/* <h3>Breakfast</h3>
-      {selectedDayNote.breakfast ? (
-        <>
-          {editMode && (
-            <SettingBtns
-              mealType="Breakfast"
-              editMealMode={false}
-              editMealHandle={editMealHandle}
-            />
-          )}
-          <MealNote data={selectedDayNote.breakfast} />
-        </>
-      ) : (
-        <Button
-          className="ui button"
-          color="teal"
-          onClick={() => showMealFormHandle(selectedDayNote.id, "Breakfast")}
-        >
-          Add Breakfast details
-        </Button>
-      )} */}
-{/* 
-      <h2>This is new section</h2>
-      <MealDetailsSection
-        mealType="Breakfast"
-        editMealMode={false}
-        editMealHandle={editMealHandle}
-        showMealFormHandle={showMealFormHandle}
-      /> */}
+
       {['Breakfast','Lunch','Dinner'].map((item,index)=>{
         return (
           <div key={index}>
@@ -250,38 +278,15 @@ const DateDetails = () => {
                 mealType={item}
                 editMealHandle={editMealHandle}
                 showMealFormHandle={showMealFormHandle}
+                deleteMealHandle={deleteMealNote}
                 editMealMode={false}
+                // showConfirm={showConfirm.confirmOpened}
               />
           </div>
         
         );
       })}
-      {/* <br />
-      <h3>Lunch</h3>
-      {selectedDayNote.lunch ? (
-        <MealNote data={selectedDayNote.lunch} />
-      ) : (
-        <Button
-          className="ui button"
-          color="teal"
-          onClick={() => showMealFormHandle(selectedDayNote.id, "Lunch")}
-        >
-          Add Lunch details
-        </Button>
-      )}
-      <br />
-      <h3>Dinner</h3>
-      {selectedDayNote.dinner ? (
-        <MealNote data={selectedDayNote.dinner} />
-      ) : (
-        <Button
-          className="ui button"
-          color="teal"
-          onClick={() => showMealFormHandle(selectedDayNote.id, "Dinner")}
-        >
-          Add Dinner details
-        </Button>
-      )} */}
+      
       <br />
       <AddMealNoteModal
         modalOpen={showMealForm}
@@ -295,6 +300,15 @@ const DateDetails = () => {
         onSubmit={onSubmitDayFormHandle}
         editMode={editMode}
       />
+      {showConfirm.confirmOpened ? 
+        <ConfirmModal
+           confirmOpened={showConfirm.confirmOpened}
+           confirmHeader={showConfirm.confirmHeader}
+           confirmContent={showConfirm.confirmContent}
+           handleConfirm={handleConfirm}
+           handleCancel={()=>setShowConfirm({confirmOpened:false,confirmContent:'',confirmHeader:'',type:''})}
+        /> 
+      : null}
     </div>
   );
 };

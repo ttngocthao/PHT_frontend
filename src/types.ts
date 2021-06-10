@@ -117,6 +117,12 @@ export type DailyNoteAction = {
 }|{
     type:'UPDATE_MEALNOTE'
     payload:MealNoteEntry
+}|{
+    type:'DELETE_MEALNOTE'
+    payload: MealNoteEntry
+}|{
+    type:'DELETE_DAILYNOTE'
+    payload: IDailyNote
 };
 
 

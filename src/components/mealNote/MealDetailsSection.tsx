@@ -9,10 +9,11 @@ interface Props {
   mealType: string
   editMealMode:boolean
   editMealHandle: (mealType:string)=>void
+  deleteMealHandle: (mealType:string)=>void
   showMealFormHandle: (selectedDayNoteId:string,mealType:string)=>void
 }
 
-const MealDetailsSection = ({mealType,editMealMode,editMealHandle,showMealFormHandle}:Props) => {
+const MealDetailsSection = ({mealType,editMealMode,editMealHandle,showMealFormHandle,deleteMealHandle}:Props) => {
   const selectedDayNote = useSelector((state:RootState)=>state.dailyNotes.selectedDayNote);
   const editMode = useSelector((state:RootState)=>state.dailyNotes.editMode);
   const getMealNoteData =()=>{
@@ -51,6 +52,7 @@ const MealDetailsSection = ({mealType,editMealMode,editMealHandle,showMealFormHa
               mealType={mealType}
               editMealMode={editMealMode}
               editMealHandle={()=>editMealHandle(mealType)}
+              deleteMealHandle={deleteMealHandle}
             />
           )}
           <MealNote data={data} />

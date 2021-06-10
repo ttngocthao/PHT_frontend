@@ -150,3 +150,19 @@ export const updateMealNote =(mealNoteId:string,mealNoteValue:EntryMealNoteFormV
   }
   
 };
+
+
+export const deleteDailyNote =(dailyNoteId:string)=>{
+  try {
+    return async(dispatch:DispatchType)=>{
+      const deletedItem = await dailyNoteService.remove(dailyNoteId);
+      const action: DailyNoteAction={
+        type: actionTypes.DELETE_DAILYNOTE,
+        payload: deletedItem
+      };
+      return dispatch(action);
+    };
+  } catch (error) {
+    console.log(error);
+  }
+};

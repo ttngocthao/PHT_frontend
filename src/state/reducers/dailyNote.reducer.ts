@@ -32,9 +32,13 @@ const reducer =(state:DailyNoteState = initialState,action: DailyNoteAction):Dai
             return {...state,dailyNotes: [...state.dailyNotes, action.payload],selectedDayNote:action.payload};
 
         case actionTypes.UPDATE_DAILYNOTE:
-            const updatedDailyNotes = state.dailyNotes.map((item:IDailyNote)=> item.id=== action.payload.id ? action.payload : item);
+            updatedAllNotes = state.dailyNotes.map((item:IDailyNote)=> item.id=== action.payload.id ? action.payload : item);
             // console.log('update daily notes',updatedDailyNotes);
-            return {...state,dailyNotes:updatedDailyNotes,selectedDayNote:action.payload};
+            return {...state,dailyNotes:updatedAllNotes,selectedDayNote:action.payload};
+
+        case actionTypes.DELETE_DAILYNOTE:
+            updatedAllNotes = state.dailyNotes.filter((item:IDailyNote)=>item.id !== action.payload.id );
+            return {...state,dailyNotes:updatedAllNotes,selectedDayNote:undefined};
 
         case actionTypes.SELECT_MEALTYPE:
             return {...state, selectedMealType: action.payload};

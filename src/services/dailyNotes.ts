@@ -17,4 +17,8 @@ const update = async(dailyNoteId:string,dailyNoteValue: Partial<EntryDailyNoteFo
     return res.data;
 };
 
-export default{getAll,add,update};
+const remove = async(dailyNoteId:string)=>{
+    const res = await axios.delete<IDailyNote>(`${baseUrl}/${dailyNoteId}`);
+    return res.data;
+};
+export default{getAll,add,update,remove};
