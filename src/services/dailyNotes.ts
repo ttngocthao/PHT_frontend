@@ -13,7 +13,7 @@ const add = async(newDailyNote:EntryDailyNoteFormValue)=>{
 };
 
 const update = async(dailyNoteId:string,dailyNoteValue: Partial<EntryDailyNoteFormValue>)=>{      
-    const res = await axios.post<IDailyNote>(`${baseUrl}/update/${dailyNoteId}`,dailyNoteValue);
+    const res = await axios.post<IDailyNote>(`${baseUrl}/${dailyNoteId}`,dailyNoteValue);
     return res.data;
 };
 
