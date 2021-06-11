@@ -12,7 +12,7 @@ const SettingBtns = ({mealType,editMealMode,editMealHandle,deleteMealHandle}:Pro
     return (
         <div>
             <Button color='orange' onClick={()=>editMealHandle(mealType)}>{editMealMode ? 'Finish Editing' : `Edit ${mealType} Details`}</Button>
-            <Button color='red' onClick={()=>deleteMealHandle(mealType)}>Delete {mealType} Details</Button>
+            <Button color='grey' onClick={()=>deleteMealHandle(mealType)}>Delete {mealType} Details</Button>
 
         </div>
     );

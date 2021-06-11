@@ -12,4 +12,8 @@ const update = async(mealNoteId:string,mealNoteValue:EntryMealNoteFormValue)=>{
     return res.data;
 };
 
-export default{add,update};
+const remove = async(mealNoteId:string)=>{
+    const res = await axios.delete<MealNoteEntry>(`${baseUrl}/${mealNoteId}`);
+    return res.data;
+};
+export default{add,update, remove};

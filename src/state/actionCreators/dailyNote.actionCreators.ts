@@ -166,3 +166,18 @@ export const deleteDailyNote =(dailyNoteId:string)=>{
     console.log(error);
   }
 };
+
+export const deleteMealNote =(mealNoteId:string)=>{
+  try {
+    return async (dispatch:DispatchType)=>{
+      const deletedItem = await mealNotesService.remove(mealNoteId);
+      const action: DailyNoteAction ={
+        type: actionTypes.DELETE_MEALNOTE,
+        payload: deletedItem
+      };
+      return dispatch(action);
+    };
+  } catch (error) {
+    console.log(error);
+  }
+};

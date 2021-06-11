@@ -55,12 +55,20 @@ const reducer =(state:DailyNoteState = initialState,action: DailyNoteAction):Dai
         
         case actionTypes.TOGGLE_EDITMODE:
             return {...state,editMode:!state.editMode};
+
         case actionTypes.UPDATE_MEALNOTE:
             const updatedMealNote = action.payload;
             mealType = updatedMealNote.mealType.toLowerCase();
             selectedDayNote = {...state.selectedDayNote,[mealType]:updatedMealNote} as IDailyNote;
             updatedAllNotes = state.dailyNotes.map((item:IDailyNote)=>item.date === selectedDayNote.date ? selectedDayNote : item);
             return {...state,dailyNotes:updatedAllNotes,selectedDayNote:selectedDayNote};
+
+        case actionTypes.DELETE_MEALNOTE:
+            const deletedItem = action.payload;
+            mealType = deletedItem.mealType.toLocaleLowerCase();
+            selectedDayNote ={...state.selectedDayNote,[mealType]:undefined} as IDailyNote;
+            updatedAllNotes = state.dailyNotes.map((item:IDailyNote)=>item.date === selectedDayNote.date ? selectedDayNote: item);
+            return {...state,dailyNotes: updatedAllNotes,selectedDayNote: selectedDayNote};
 
         default:
             return state;
