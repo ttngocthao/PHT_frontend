@@ -10,7 +10,8 @@ import {
   updateDailyNote,
   toggleEditMode,
   updateMealNote,
-  deleteDailyNote
+  deleteDailyNote,
+  deleteMealNote as deleteMealById
 } from "../../state/actionCreators/dailyNote.actionCreators";
 import { RootState } from "../../store";
 import AddDailyNoteModal from "../addDailyNoteModal";
@@ -38,6 +39,7 @@ const DateDetails = () => {
     confirmHeader: '',
     type:''
     });
+ 
   // const [editMode,setEditMode]= useState(false);
 
   const onSubmitDayFormHandle = (values: EntryDailyNoteFormValue) => {
@@ -139,19 +141,28 @@ const DateDetails = () => {
   const fastingProtocol = (): string => {
     let countMeals = 0;
     let protocol = "";
-    if (selectedDayNote.breakfast?.skippedMeal) {
+    if (!selectedDayNote.breakfast || selectedDayNote.breakfast===null) {
       countMeals++;
     }
-    if (selectedDayNote.lunch?.skippedMeal) {
+     if(!selectedDayNote.lunch || selectedDayNote.lunch===null){
       countMeals++;
     }
-    if (selectedDayNote.dinner?.skippedMeal) {
+    if(!selectedDayNote.dinner || selectedDayNote.dinner===null){
       countMeals++;
     }
-
+    if(selectedDayNote.breakfast && selectedDayNote.breakfast.skippedMeal){
+      countMeals++;
+    }
+    if ( selectedDayNote.lunch && selectedDayNote.lunch.skippedMeal) {
+      countMeals++;
+    }
+    if ( selectedDayNote.dinner && selectedDayNote.dinner.skippedMeal) {
+      countMeals++;
+    }
+   
     switch (countMeals) {
       case 0:
-        protocol = "3Mad";
+        protocol = "3Mad";        
         break;
       case 1:
         protocol = "2Mad";
@@ -166,6 +177,7 @@ const DateDetails = () => {
         protocol = "3Mad";
         break;
     }
+    console.log('countMeals',countMeals);
     return protocol;
   };
 
@@ -212,16 +224,33 @@ const DateDetails = () => {
         dispatch(deleteDailyNote(selectedDayNote.id));
         break;
       case 'breakfast':
-        alert('delete this breakfast detail');
-        //dispatch delete breakfast
+         //dispatch delete breakfast
+        if(selectedDayNote.breakfast){
+          dispatch(deleteMealById(selectedDayNote.breakfast.id));
+        }else{
+          alert('Could not find the breakfast id');
+          console.log('selectedDayNote',selectedDayNote);
+        }
+       
         break;
-      case 'lunch':
-        alert('delete this lunch detail');
-          //dispatch delete lunch
+      case 'lunch': 
+        //dispatch delete lunch
+        if(selectedDayNote.lunch){
+          dispatch(deleteMealById(selectedDayNote.lunch.id));
+        }else{
+          alert('Could not find the lunch id');
+          console.log('selectedDayNote',selectedDayNote);
+        }     
+         
         break;
       case 'dinner':
-        alert('delete this dinner detail');
-          //dispatch delete dinner
+        //dispatch delete dinner
+        if(selectedDayNote.dinner){
+          dispatch(deleteMealById(selectedDayNote.dinner.id));
+        }else{
+          alert('Could not find the dinner id');
+          console.log('selectedDayNote',selectedDayNote);
+        }
         break;
       default:
         break;

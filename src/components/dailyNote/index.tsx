@@ -33,7 +33,7 @@ const DailyNote = ({fastingHours,sleepingHours,date,note,fastingProtocol,medicat
             </div>}
            
            {sleepingHours &&    <div>
-               <h3>Sleeping hours: </h3>
+               <h3>Sleeping hours</h3>
                 <p>{sleepingHours} hours</p><br/>
             </div>}
            
